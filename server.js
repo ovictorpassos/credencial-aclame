@@ -127,7 +127,13 @@ if (ACCESS_PASSWORD) {
 
   app.post('/login', express.urlencoded({ extended: false }), (req, res) => {
     if (req.body.senha === ACCESS_PASSWORD) {
-      res.cookie('auth', ACCESS_PASSWORD, { httpOnly: true, sameSite: 'strict' });
+      const isProduction = process.env.NODE_ENV === 'production' || !!process.env.RENDER;
+      res.cookie('auth', ACCESS_PASSWORD, {
+        httpOnly: true,
+        sameSite: 'lax',
+        secure: isProduction,
+        maxAge: 1000 * 60 * 60 * 12, // 12 horas
+      });
       return res.redirect('/');
     }
     res.redirect('/login?erro=1');
