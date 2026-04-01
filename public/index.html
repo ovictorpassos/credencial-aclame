@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Credenciamento</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div id="app">
+
+    <!-- HEADER -->
+    <header>
+      <div class="logo-mark">✦</div>
+      <h1 id="nome-evento">Credenciamento</h1>
+      <p id="nome-igreja" class="subtitle"></p>
+    </header>
+
+    <!-- BUSCA -->
+    <div id="busca-section">
+
+      <div class="field-label">
+        <span>CPF do participante</span>
+        <span class="tooltip-wrap">
+          <span class="tooltip-icon">?</span>
+          <span class="tooltip-box">
+            Digite apenas os números ou no formato<br>
+            <strong>000.000.000-00</strong><br>
+            O CPF deve estar cadastrado no formulário de inscrição.
+          </span>
+        </span>
+      </div>
+
+      <div class="input-wrap" id="input-wrap">
+        <input
+          type="text"
+          id="cpf-input"
+          placeholder="000.000.000-00"
+          maxlength="14"
+          autocomplete="off"
+          inputmode="numeric"
+          spellcheck="false"
+        >
+        <button id="btn-buscar" data-tooltip="Buscar participante (Enter)">
+          <span class="btn-text">Buscar</span>
+          <span class="btn-icon">→</span>
+        </button>
+      </div>
+
+      <p class="input-hint">
+        <span class="hint-key">↵ Enter</span> para buscar
+      </p>
+
+      <!-- Loading -->
+      <div id="loading" class="hidden">
+        <div class="spinner"></div>
+        <span id="loading-msg">Buscando participante…</span>
+      </div>
+
+      <!-- Erro de validação inline -->
+      <div id="inline-error" class="inline-error hidden">
+        <span class="error-icon">!</span>
+        <span id="inline-error-msg"></span>
+      </div>
+
+      <!-- Passo a passo -->
+      <div class="passo-a-passo">
+        <div class="passo">
+          <span class="passo-num">1</span>
+          <span class="passo-acao">Digite seu CPF</span>
+          <span class="passo-desc">e clique em Buscar</span>
+        </div>
+        <div class="passo-sep">→</div>
+        <div class="passo">
+          <span class="passo-num">2</span>
+          <span class="passo-acao">Confirme seu nome</span>
+          <span class="passo-desc">na tela antes de imprimir</span>
+        </div>
+        <div class="passo-sep">→</div>
+        <div class="passo">
+          <span class="passo-num">3</span>
+          <span class="passo-acao">Imprima a credencial</span>
+          <span class="passo-desc">clicando no botão verde</span>
+        </div>
+        <div class="passo-sep">→</div>
+        <div class="passo">
+          <span class="passo-num">4</span>
+          <span class="passo-acao">Retire na mesa ao lado</span>
+          <span class="passo-desc">e aproveite o evento!</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RESULTADO: ENCONTRADO -->
+    <div id="resultado-sucesso" class="resultado hidden">
+      <div class="status-badge sucesso">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+      <p class="result-label">Participante encontrado</p>
+      <h2 id="nome-participante"></h2>
+      <p class="result-cpf" id="result-cpf"></p>
+
+      <div class="acoes">
+        <button id="btn-imprimir" class="btn-primary" data-tooltip="Imprime a credencial diretamente">
+          <span class="btn-icon-left">🖨</span>
+          <span class="btn-text">Imprimir Credencial</span>
+        </button>
+        <button id="btn-nova-busca" class="btn-secondary" data-tooltip="Voltar e buscar outro participante (Esc)">
+          <span class="btn-text">Nova Busca</span>
+        </button>
+      </div>
+
+      <p class="esc-hint"><span class="hint-key">Esc</span> nova busca</p>
+    </div>
+
+    <!-- RESULTADO: NÃO CADASTRADO -->
+    <div id="resultado-nao-encontrado" class="resultado hidden">
+
+      <div class="status-badge aviso">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+          <line x1="12" y1="9" x2="12" y2="13"/>
+          <line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+      </div>
+
+      <p class="result-label aviso-label">CPF não cadastrado</p>
+      <p class="nao-encontrado-cpf" id="nao-encontrado-cpf"></p>
+      <p class="nao-encontrado-msg">
+        Este CPF não está na lista de inscritos.<br>
+        <span class="nao-encontrado-dica">Verifique se digitou corretamente ou siga as instruções abaixo.</span>
+      </p>
+
+      <div class="instrucoes-grid">
+        <div class="instrucao-card">
+          <span class="instrucao-icone">🏷️</span>
+          <div>
+            <p class="instrucao-titulo">Balcão de Inscrição</p>
+            <p class="instrucao-desc">Dirija-se ao balcão na entrada do evento para realizar sua inscrição.</p>
+          </div>
+        </div>
+        <div class="instrucao-card">
+          <span class="instrucao-icone">🦺</span>
+          <div>
+            <p class="instrucao-titulo">Fale com a Staff</p>
+            <p class="instrucao-desc">Procure alguém com colete ou crachá de Staff — eles vão te ajudar!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="acoes">
+        <button id="btn-tentar-novamente" class="btn-secondary btn-full">
+          <span class="btn-text">← Tentar outro CPF</span>
+        </button>
+      </div>
+
+      <p class="esc-hint"><span class="hint-key">Esc</span> para voltar</p>
+    </div>
+
+    <!-- OBRIGADO (pós-impressão) -->
+    <div id="resultado-obrigado" class="resultado hidden">
+      <div class="obrigado-icon">🙏</div>
+      <h2 class="obrigado-titulo">Credencial impressa!</h2>
+      <p class="obrigado-msg">Retire sua credencial na mesa ao lado<br>e dirija-se ao local do evento.</p>
+      <p class="obrigado-destaque">Seja bem-vindo ao<br><strong id="obrigado-evento"></strong></p>
+      <p class="obrigado-bom-culto">✨ Bom culto! ✨</p>
+
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <p class="redirect-hint">Voltando em <span id="countdown">6</span>s…</p>
+    </div>
+
+    <!-- CONTADOR -->
+    <div id="contador">
+      <span class="contador-label">Credenciais impressas</span>
+      <span id="contador-valor">0</span>
+    </div>
+
+  </div>
+
+  <!-- CREDENCIAL PARA IMPRESSÃO — 100×30mm -->
+  <div id="credencial-print">
+    <div class="credencial">
+
+      <!-- ESQUERDA: evento -->
+      <div class="credencial-header">
+        <p class="credencial-igreja" id="print-igreja"></p>
+        <h3 class="credencial-evento" id="print-evento"></h3>
+      </div>
+
+      <!-- DIVISOR -->
+      <div class="credencial-divisor"></div>
+
+      <!-- DIREITA: nome + rodapé -->
+      <div class="credencial-body">
+        <p class="credencial-nome" id="print-nome"></p>
+        <div class="credencial-footer">
+          <p class="credencial-data" id="print-data"></p>
+          <p class="credencial-protocolo" id="print-protocolo"></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

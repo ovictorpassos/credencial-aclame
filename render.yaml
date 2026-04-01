@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: credencial-aclame
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: SPREADSHEET_ID
+        sync: false
+      - key: GOOGLE_API_KEY
+        sync: false
+      - key: APPS_SCRIPT_URL
+        sync: false
+      - key: ACCESS_PASSWORD
+        sync: false
